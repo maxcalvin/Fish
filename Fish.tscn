@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://d4h5b6kiorwlu"]
+
+[ext_resource type="Script" path="res://Fish.cs" id="1_oinbd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k0k1e"]
+size = Vector3(0.61084, 2.00839, 2.01196)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yy2pn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x2ac7"]
+albedo_color = Color(1, 0.396078, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nh6td"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_db603"]
+albedo_color = Color(0.0666667, 0.34902, 1, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_bn1wi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y4b5h"]
+albedo_color = Color(0.933333, 0.317647, 0.984314, 1)
+
+[node name="Fish" type="CharacterBody3D"]
+motion_mode = 1
+slide_on_ceiling = false
+script = ExtResource("1_oinbd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_k0k1e")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_yy2pn")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_x2ac7")
+
+[node name="EyeMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.31134e-08, 0.3, 0, -0.3, -1.31134e-08, 0, 0, 0, 0.3, 0, 0.2, -0.5)
+mesh = SubResource("CapsuleMesh_nh6td")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_db603")
+
+[node name="TailMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-8.74228e-08, 4.37114e-08, -0.2, 2, -4.37114e-08, -8.74228e-09, -8.74228e-08, -1, -8.74228e-09, 0, 0, 0.5)
+mesh = SubResource("PrismMesh_bn1wi")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_y4b5h")
+
+[node name="LabelForward" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 2.5)
+billboard = 1
+text = "Heading Vector"
+font_size = 64
+
+[node name="LabelDistance" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3, 1.25, 2.5)
+billboard = 1
+text = "Distance From Planet Core"
+font_size = 48
+
+[node name="LabelCurrentTime" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3, 1.25, 2.5)
+billboard = 1
+text = "Current Time"
+font_size = 48
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+visible = false
+light_color = Color(1, 0.231373, 1, 1)
+light_energy = 8.924
+spot_range = 12.7337
+spot_angle = 33.7178

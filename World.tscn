@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://ceosny85osaue"]
+
+[ext_resource type="PackedScene" uid="uid://d4h5b6kiorwlu" path="res://Fish.tscn" id="1_7mjq0"]
+[ext_resource type="Script" path="res://World.cs" id="1_ucavi"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_hjuiu"]
+
+[sub_resource type="Gradient" id="Gradient_j05uc"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.467213, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0901639, 0.0901639, 0.0901639, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ga31k"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6mxrt"]
+seamless = true
+seamless_blend_skirt = 0.095
+as_normal_map = true
+bump_strength = 32.0
+color_ramp = SubResource("Gradient_j05uc")
+noise = SubResource("FastNoiseLite_ga31k")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vi2ty"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_t1j4y"]
+in_3d_space = true
+seamless = true
+as_normal_map = true
+bump_strength = 580.0
+noise = SubResource("FastNoiseLite_vi2ty")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oyo2n"]
+albedo_color = Color(0.141176, 0.596078, 0, 1)
+roughness_texture = SubResource("NoiseTexture2D_t1j4y")
+normal_enabled = true
+normal_scale = -16.0
+normal_texture = SubResource("NoiseTexture2D_6mxrt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_agp0r"]
+transparency = 1
+albedo_color = Color(0.223529, 0.12549, 1, 0.286275)
+
+[sub_resource type="SphereMesh" id="SphereMesh_he35d"]
+material = SubResource("StandardMaterial3D_agp0r")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_w2gts"]
+viewport_path = NodePath("SubViewport")
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_ucavi")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.350473, 0.345962, 0.870333, 0.803901, 0.58791, 0.0900248, -0.480532, 0.731213, -0.484166, 157.621, 0.705109, 0.271376)
+shadow_enabled = true
+
+[node name="PlanetCoreMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+mesh = SubResource("SphereMesh_hjuiu")
+surface_material_override/0 = SubResource("StandardMaterial3D_oyo2n")
+
+[node name="OceanMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(120, 0, 0, 0, 120, 0, 0, 0, 120, 0, 0, 0)
+mesh = SubResource("SphereMesh_he35d")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(768, 512)
+
+[node name="Fish" parent="SubViewport" node_paths=PackedStringArray("WorldNode") instance=ExtResource("1_7mjq0")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 52, 0)
+WorldNode = NodePath("../..")
+IsCameraFish = true
+
+[node name="FishCamera" type="Camera3D" parent="SubViewport/Fish"]
+transform = Transform3D(1, 0, 0, 0, 0.737772, 0.67505, 0, -0.67505, 0.737772, 0, 1.85362, 5.36488)
+fov = 84.7
+
+[node name="WorldCamera" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 110, 0, 0)
+current = true
+
+[node name="FishView" type="Sprite2D" parent="."]
+position = Vector2(192, 128)
+scale = Vector2(0.5, 0.5)
+texture = SubResource("ViewportTexture_w2gts")
