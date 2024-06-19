@@ -12,6 +12,9 @@ Some nice to haves:
 * Control the camera fish with up/down (jump/crouch) movement keys
 * Smoothly rotate the fish to their new direction rather than snapping
   * I tried a LERP but it didn't quite work how I wanted
+* Select a fish for the camera fish maybe
+* Randomise the scale of the fish perhaps
+* Maybe... add some real models 😅
 
 It uses physics so sometimes fish can bump and stick on each other, but they usually clear up when they change direction.
 
